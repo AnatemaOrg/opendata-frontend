@@ -1,0 +1,149 @@
+
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="floating-title">DASHBOARD</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-4">
+        <div class="card dark-yellow-skin bg-gradient-danger card-img-holder ">
+          <div class="card-body">
+            <img alt="circle-image" class="card-img-absolute" src="assets/img/filedrawer.png">
+            <h4 class="font-weight-normal mb-3">Total solicitudes
+              <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+            </h4>
+            <h2 class="mb-3">1032</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4">
+        <div class="card sky-skin bg-gradient-danger card-img-holder ">
+          <div class="card-body">
+            <img alt="circle-image" class="card-img-absolute" src="assets/img/document.png">
+            <h4 class="font-weight-normal mb-3">Total de solicitudes con respuesta
+              <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+            </h4>
+            <h2 class="mb-3">332</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4">
+        <div class="card sky-skin bg-gradient-danger card-img-holder ">
+          <div class="card-body">
+            <img alt="circle-image" class="card-img-absolute" src="assets/img/reviewdoc.png">
+            <h4 class="font-weight-normal mb-3">Total de solicitudes en apelacion
+              <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+            </h4>
+            <h2 class="mb-3">30</h2>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+    
+    <br>
+    <br>
+    <div class="row align-container">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+
+        <h2>[TEST] - Proyeccion de la temperatura en las proximas horas</h2>
+
+        <div class="widget">
+          <div class="mini-stats">
+  
+            <p class="align-right">
+              Seleccione una ciudad y un tipo de visualización
+            </p>
+
+            <div class="visualization">
+              <div class=" action-buttons">
+                <button
+                  class="btn btn-secondary"
+                  [class.btn-success]="isActive[0]"
+                  (click)="getMeasureRangeChart('San%20Salvador')"
+                >
+                  San Salvador
+                </button>
+                <button
+                  class="btn btn-secondary"
+                  [class.btn-success]="isActive[1]"
+                  (click)="getMeasureRangeChart('Guatemala')"
+                >
+                Guatemala
+                </button>
+                <button
+                  class="btn btn-secondary"
+                  [class.btn-success]="isActive[2]"
+                  (click)="getMeasureRangeChart('Tegucigalpa')"
+                >
+                Tegucigalpa
+                </button>
+                <button
+                  class="btn btn-secondary"
+                  [class.btn-success]="isActive[3]"
+                  (click)="getMeasureRangeChart('Managua')"
+                >
+                Managua
+                </button>
+
+              </div>
+              &nbsp;
+              <div class=" action-buttons">
+                <button
+                  title="Barra"
+                  class="btn"
+                  [ngClass]="{'btn-success': chartActive[0] == true, 'btn-dark': chartActive[0] != true}"
+                  (click)="changeGraphicType('bar')"
+                >
+                
+
+
+                <fa-icon [icon]="faChartBar"></fa-icon>
+                </button>
+                <button
+                  title="Línea"
+                  class="btn"
+                  [ngClass]="[
+                    chartActive[1] == true
+                      ? 'btn-success'
+                      : 'btn-dark'
+                  ]"
+                  (click)="changeGraphicType('line')"
+                >
+                  <fa-icon [icon]="faChartLine"></fa-icon>
+                </button>
+                <!--
+                <button title="Area" [ngClass]="[chartActive[2]==true ? 'btn  btn-success' : 'btn btn-dark']" (click)="changeGraphicType('radar')"> 
+                  <i class="fa fa-chart-area"></fa-icon>
+                </button>-->
+                <button
+                  title="Tabla"
+                  class="btn"
+                  [ngClass]="[
+                    chartActive[3] == true
+                      ? 'btn-success'
+                      : 'btn-dark'
+                  ]"
+                  (click)="changeToTable()"
+                >
+                  <fa-icon [icon]="faTable"></fa-icon>
+                </button>
+              </div>
+            </div>
+            <br>
+            <div class="chart-container" id="chart-wrapper" >
+              <canvas id="canvas" >{{ chart }}</canvas>
+
+            </div>  
+  
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      
+
+  </div>
+  <br>

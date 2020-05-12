@@ -1,1 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+@import url('https://fonts.googleapis.com/css2?family=K2D:wght@300&family=Varela+Round&display=swap');
+
+body {
+  font-family: 'Varela Round', sans-serif;
+}
+
+h1,h2,h3,h4,h5 {
+  font-family: 'K2D', sans-serif;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// MAIN PALETTE
+
+$independence: #3D405B;
+$green-sheen: #81B29A;
+$gold: #F2CC8F;
+$eggshell: #F4F1DE;
+$terra: #E07A5F;
+
+// GENERAL STYLES
+
+.main-toolbar {
+  background-color: $green-sheen !important;
+}
