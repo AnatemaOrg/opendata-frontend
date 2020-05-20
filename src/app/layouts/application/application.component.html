@@ -1,0 +1,22 @@
+<div class="main-container" [class.main-is-mobile]="mobileQuery.matches">
+  <mat-toolbar color="primary" class="main-toolbar">
+    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+    <h1 class="main-app-name">DATOS</h1>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="main-sidenav-container"
+                         >
+    <mat-sidenav #snav >
+      <app-sidebar></app-sidebar>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+      <app-footer></app-footer>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
+
+
+
