@@ -4,9 +4,37 @@
 
 
 .card-img-absolute {
-  width: 100px;
-    position: absolute;
-    right: 0;
+  width: 150px;
+  height: 138px;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  //position: absolute;
+    //right: 0;
+}
+
+select.custom-select {
+  height: 44px;
+  width: 300px;
+}
+
+.border-less {
+  border: 0;
+}
+
+.bg-less {
+  background: none;
+}
+
+.priority {
+  text-align: center;
+  font-size: 2.8rem;
+  font-weight: bold;
+  margin: 20px 0; 
+}
+
+.card-description {
+  text-align: center;
 }
 
 h4.card-text {
@@ -42,8 +70,10 @@ h4.card-text {
   }
 }
 
-.savings-wrapper {
-  height: 150px;
+
+
+.primary-data {
+  height: 300px;
 }
 
 #toogleTable {
@@ -329,38 +359,6 @@ table {
     }
   }
 
-  .enviroment-stats {
-    background: #ffffff none repeat scroll 0 0;
-    border-radius: 5px;
-    padding: 20px;
-    display: table;
-
-    .enviromental-icon {
-      height: 128px;
-      display: table-cell;
-      vertical-align: middle;
-    }
-
-    .enviromental-text {
-      line-height: 1.2;
-      display: table-cell;
-      font-size: 1rem;
-      text-transform: initial;
-      padding-left: 10px;
-      vertical-align: middle;
-
-      span {
-        float: none;
-        margin: 0;
-        display: inline;
-        border: none;
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: #47a44b;
-        vertical-align: middle;
-      }
-    }
-  }
 }
 
 .btn {
@@ -369,9 +367,9 @@ table {
 
 .chart-container {
   display: block;
-  height: 600px;
+  height: 400px;
   @media screen and (max-width: 960px) {
-    height: 350px;
+    height: 320px;
   }
   position: relative;
 }

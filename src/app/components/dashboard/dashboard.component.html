@@ -3,40 +3,68 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
-        <h1 class="floating-title">DASHBOARD</h1>
+        <h1 class="floating-title">Datos abiertos - Informacion</h1>
+  
+        <p>
+          Se muestran datos utiles y curiosos relacionados con las solicitudes 
+          realizadas por FUNDE, que ha hecho uso de la Ley de Acceso a la Información Publica.
+          Las fuentes de datos utilizados en este han sido descargados desde la pagina web: 
+          <a href="https://alac.funde.org/api/v1" target="_blank">https://alac.funde.org/api/v1</a>.
+          A su vez, los datos han sido procesados para obtener informacion mas segregada.
+          <br>
+          El uso de este portal es de caracter informativo y sin fines de lucro.
+        </p>
+        <br>
+        <br>
+      </div>
+  
+    </div>
+    
+    <div class="row">
+      <div class="col-12">
+        
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-4 col-md-4 col-sm-4">
-        <div class="card dark-yellow-skin bg-gradient-danger card-img-holder ">
-          <div class="card-body">
-            <img alt="circle-image" class="card-img-absolute" src="assets/img/filedrawer.png">
-            <h4 class="font-weight-normal mb-3">Total solicitudes
-              <i class="mdi mdi-chart-line mdi-24px float-right"></i>
-            </h4>
-            <h2 class="mb-3">1032</h2>
+
+      <div class="col-12">
+        <h1 class="floating-title">Datos consolidados de solicitudes</h1>
+
+      </div>
+
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+        <div class="card border-less bg-less ">
+          <div class="card-body primary-data">
+            <img alt="solicitudes" class="card-img-absolute" src="assets/img/archivero.svg">
+            <h2 class="priority">{{totalRequests}}</h2>
+            <h4 class="card-description">Total solicitudes realizadas</h4>
           </div>
         </div>
       </div>
-      <div class="col-lg-4 col-md-4 col-sm-4">
-        <div class="card sky-skin bg-gradient-danger card-img-holder ">
-          <div class="card-body">
-            <img alt="circle-image" class="card-img-absolute" src="assets/img/document.png">
-            <h4 class="font-weight-normal mb-3">Total de solicitudes con respuesta
-              <i class="mdi mdi-chart-line mdi-24px float-right"></i>
-            </h4>
-            <h2 class="mb-3">332</h2>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+        <div class="card border-less bg-less ">
+          <div class="card-body primary-data">
+            <img alt="solicitudes" class="card-img-absolute" src="assets/img/carpeta.svg">
+            <h2 class="priority">{{totalCompleteAnswer}}</h2>
+            <h4 class="card-description">Total de solicitudes con respuesta completa</h4>
           </div>
         </div>
       </div>
-      <div class="col-lg-4 col-md-4 col-sm-4">
-        <div class="card sky-skin bg-gradient-danger card-img-holder ">
-          <div class="card-body">
-            <img alt="circle-image" class="card-img-absolute" src="assets/img/reviewdoc.png">
-            <h4 class="font-weight-normal mb-3">Total de solicitudes en apelacion
-              <i class="mdi mdi-chart-line mdi-24px float-right"></i>
-            </h4>
-            <h2 class="mb-3">30</h2>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+        <div class="card border-less bg-less ">
+          <div class="card-body primary-data">
+            <img alt="solicitudes" class="card-img-absolute" src="assets/img/papelera.svg">
+            <h2 class="priority">{{totalNoAnswer}}</h2>
+            <h4 class="card-description">Total de solicitudes sin respuesta</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+        <div class="card border-less bg-less ">
+          <div class="card-body primary-data">
+            <img alt="solicitudes" class="card-img-absolute" src="assets/img/documentos.svg">
+            <h2 class="priority">{{totalComplaints}}</h2>
+            <h4 class="card-description">Total de solicitudes en apelacion</h4>
           </div>
         </div>
       </div>
@@ -45,51 +73,126 @@
     
     <br>
     <br>
+
+    <div class="row align-container">
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="widget">
+          <div class="mini-stats">
+            <h2>Promedio de respuesta de partidos politicos</h2>
+            <div class="chart-mini-container" id="chart-mini-wrapper-1" >
+              <canvas id="canvas-mini-1" *ngIf="chart1exists">
+                {{chartParties}}
+              </canvas>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="widget">
+          <div class="mini-stats">
+            <h2>Resultados de apelaciones</h2>
+            <div class="chart-mini-container" id="chart-mini-wrapper-2" >
+              <canvas id="canvas-mini-2" >{{ chartComplaintsAnswer }}</canvas>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="widget">
+          <div class="mini-stats">
+            <h2>Instituciones con promedio de respuestas mas rapido</h2>
+
+            <div class="chart-mini-container" id="chart-mini-wrapper-3" >
+              <canvas id="canvas-mini-3" >{{ chartFastAnswer }}</canvas>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="widget">
+          <div class="mini-stats">
+            <h2>Instituciones con promedio de respuestas mas bajo</h2>
+
+            <div class="chart-mini-container" id="chart-mini-wrapper-4" >
+              <canvas id="canvas-mini-4" >{{ chartSlowAnswer }}</canvas>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <br>
     <div class="row align-container">
       <div class="col-lg-12 col-md-12 col-sm-12">
 
-        <h2>[TEST] - Proyeccion de la temperatura en las proximas horas</h2>
+   
+
+        <h2>Grafico con datos de solicitudes</h2>
 
         <div class="widget">
           <div class="mini-stats">
   
             <p class="align-right">
-              Seleccione una ciudad y un tipo de visualización
+              Seleccione una institución y un tipo de visualización
             </p>
 
             <div class="visualization">
               <div class=" action-buttons">
-                <button
-                  class="btn btn-secondary"
-                  [class.btn-success]="isActive[0]"
-                  (click)="getMeasureRangeChart('San%20Salvador')"
+                <select
+                  class="custom-select"
+                  (change)="onChangeObj($event)"
+                  name="sel3"
                 >
-                  San Salvador
-                </button>
-                <button
-                  class="btn btn-secondary"
-                  [class.btn-success]="isActive[1]"
-                  (click)="getMeasureRangeChart('Guatemala')"
-                >
-                Guatemala
-                </button>
-                <button
-                  class="btn btn-secondary"
-                  [class.btn-success]="isActive[2]"
-                  (click)="getMeasureRangeChart('Tegucigalpa')"
-                >
-                Tegucigalpa
-                </button>
-                <button
-                  class="btn btn-secondary"
-                  [class.btn-success]="isActive[3]"
-                  (click)="getMeasureRangeChart('Managua')"
-                >
-                Managua
-                </button>
-
+                  <option
+                    *ngFor="let item of listInstitutions"
+                    [selected]="item.id === assetID"
+                    [value]="item.id"
+                    >{{item.attributes.name }}</option
+                  >
+                </select>
               </div>
               &nbsp;
+              <div class="action-buttons">
+                
+                <button
+                  title="Solicitudes"
+                  class="btn"
+                  [ngClass]="[
+                    chartActive[0] == true
+                      ? 'btn-success'
+                      : 'btn-dark'
+                  ]"
+                  (click)="changeDataSet('requests')"
+                >
+                  Solicitudes
+                  <fa-icon [icon]="faChartLine"></fa-icon>
+                </button>
+                
+                <button
+                  title="Apelaciones"
+                  class="btn"
+                  [ngClass]="[
+                    chartActive[1] == true
+                      ? 'btn-success'
+                      : 'btn-dark'
+                  ]"
+                  (click)="changeDataSet('complaints')"
+                > 
+                  Apelaciones
+                  <fa-icon [icon]="faTable"></fa-icon>
+                </button>
+              </div>
+
+              &nbsp;
+              
+
               <div class=" action-buttons">
                 <button
                   title="Barra"
@@ -97,8 +200,6 @@
                   [ngClass]="{'btn-success': chartActive[0] == true, 'btn-dark': chartActive[0] != true}"
                   (click)="changeGraphicType('bar')"
                 >
-                
-
 
                 <fa-icon [icon]="faChartBar"></fa-icon>
                 </button>
@@ -114,10 +215,7 @@
                 >
                   <fa-icon [icon]="faChartLine"></fa-icon>
                 </button>
-                <!--
-                <button title="Area" [ngClass]="[chartActive[2]==true ? 'btn  btn-success' : 'btn btn-dark']" (click)="changeGraphicType('radar')"> 
-                  <i class="fa fa-chart-area"></fa-icon>
-                </button>-->
+                
                 <button
                   title="Tabla"
                   class="btn"
@@ -138,6 +236,88 @@
 
             </div>  
   
+            <div id="toogleTable">
+              <ng-container
+                class="example-container mat-elevation-z8"
+                *ngIf="showTable"
+              >
+                <div class="example-table-container">
+                  <div>
+                  <!--
+                  <div class="action-buttons">
+                    <button
+                      class="btn btn-primary btn-sm"
+                      mat-raised-button
+                      (click)="exporter.exportTable(exportExcel, ExcelOptions)"
+                    >
+                      <i class="fas fa-file-excel"></i>
+                      EXCEL
+                    </button>
+                    <button
+                      class="btn btn-primary btn-sm"
+                      mat-raised-button
+                      (click)="exporter.exportTable(exportCSV, CSVOptions)"
+                    >
+                      <i class="fas fa-file-csv"></i>
+                      CSV
+                    </button>
+                    <button
+                      class="btn btn-primary btn-sm"
+                      mat-raised-button
+                      (click)="exporter.exportTable(exportJSON, JSONOptions)"
+                    >
+                      <i class="fas fa-file-alt"></i>
+                      JSON
+                    </button>
+                    <button
+                      class="btn btn-primary btn-sm"
+                      mat-raised-button
+                      (click)="printTable()"
+                    >
+                      <i class="fas fa-file-alt"></i>
+                      IMPRIMIR
+                    </button>
+                  </div>
+                  -->
+                  </div>
+                  
+                  <mat-table
+                    #table
+                    [dataSource]="dataSource"
+                    id="measuresTable"
+                  >
+                    <div
+                      *ngFor="
+                        let disCol of displayedColumns;
+                        let colIndex = index
+                      "
+                      matColumnDef="{{ disCol }}"
+                    >
+                      <mat-header-cell *matHeaderCellDef>{{
+                        disCol
+                      }}</mat-header-cell>
+                      <mat-cell *matCellDef="let element">
+                        {{ element[colIndex] }}
+                      </mat-cell>
+                    </div>
+            
+                    <mat-header-row
+                      *matHeaderRowDef="displayedColumns"
+                    ></mat-header-row>
+                    <mat-row
+                      *matRowDef="let row; columns: displayedColumns"
+                    ></mat-row>
+                  </mat-table>
+                </div>
+              </ng-container>
+              <mat-paginator
+                class="hiddenonload"
+                [pageSizeOptions]="[5, 10, 25]"
+                [pageIndex]="0"
+                [pageSize]="10"
+              ></mat-paginator>
+            </div>
+
           </div>
         </div>
       </div>

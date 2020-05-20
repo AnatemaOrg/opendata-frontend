@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  productionAPI: "http://a-better-api.herokuapp.com/api/v1"
 };

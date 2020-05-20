@@ -11,6 +11,9 @@ import { DashboardComponent } from 'src/app/components/dashboard/dashboard.compo
 import { GlobalService } from 'src/app/services/global.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ApiComponent } from '@app/components/api/api.component';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+
 
 @NgModule({
   imports: [
@@ -19,8 +22,9 @@ import { ApiComponent } from '@app/components/api/api.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatTableModule,
+    MatPaginatorModule,
     FontAwesomeModule
-    
   ],
   providers: [
    GlobalService

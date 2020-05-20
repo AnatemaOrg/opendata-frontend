@@ -10,7 +10,7 @@ export const ApplicationLayoutRoutes: Routes = [
     data: { title: "Dashboard" }
   },
   {
-    path: "api",
+    path: "fuentes-de-datos",
     component: ApiComponent,
     data: { title: "API" }
   }
