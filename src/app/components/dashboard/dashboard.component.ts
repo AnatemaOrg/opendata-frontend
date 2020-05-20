@@ -150,7 +150,9 @@ export class DashboardComponent implements OnInit {
 
   tableData: any;
   showTable: boolean;
-  displayedColumns: any;
+  //displayedColumns: any;
+  displayedColumns: string[] = ['date','total'];
+
   tableData2: any[];
   dataSource = new MatTableDataSource(this.tableData2);
   dataSourcePrint = new MatTableDataSource(this.tableData2);
@@ -164,6 +166,10 @@ export class DashboardComponent implements OnInit {
   institutionID: string;
   dataInfoRequest: any;
   dataLabelRequest: any;
+  requestsChart: boolean;
+  complaintsChart: boolean;
+  chartInfoType: string;
+  chartType: any;
 
   constructor(private globalService: GlobalService) { }
 
@@ -172,7 +178,9 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     // TEST
     this.institutionID = "123"; // Default que traiga info de Presidencia
-    this.getMeasureRangeChart(this.institutionID);
+    this.chartInfoType = 'requests'; // Default vista de solicitudes de informacion
+    
+    this.getChart(this.institutionID, this.chartInfoType);
     
     this.globalService.getTotals().subscribe( res => {
       this.totalRequests = res["total_inforequests"];
@@ -188,62 +196,14 @@ export class DashboardComponent implements OnInit {
       
       labelsA =  
         ["Desistimiento","No definido","Favorable","No competente","Parcial","Desfavorable"]
-      /*
-      this.complaintsAnswerChartData = [
-        {
-          label: 'Desistimiento',
-          backgroundColor: "#ff0000",
-          data: [
-            res["total_icresults"]["Desistimiento"],0,0,0,0,0
-          ],
-        },
-        {
-          label: 'No definido',
-          backgroundColor: "#2E499C",
-          data: [
-            0,res["total_icresults"]["No definido"],0,0,0,0
-          ],
-        },
-        {
-          label: 'Favorable',
-          backgroundColor: "#2E499C",
-          data: [
-            0,0,res["total_icresults"]["Favorable"],0,0,0
-          ],
-        },
-        {
-          label: 'Oficina no competente',
-          backgroundColor: "#2E499C",
-          data: [
-            0,0,0,res["total_icresults"]["Oficina no competente"],0,0
-          ],
-        },
-        {
-          label: 'Parcial',
-          backgroundColor: "#2E499C",
-          data: [
-            0,0,0,0,res["total_icresults"]["Parcial"],0
-          ],
-        },
-        {
-          label: 'Desfavorable',
-          backgroundColor: "#2E499C",
-          data: [
-            0,0,0,0,0,res["total_icresults"]["Desfavorable"]
-          ],
-        }
-      ]; */
 
       complaintsResponseData.push(
-        
           res["total_icresults"]["Desistimiento"],
           res["total_icresults"]["No definido"],
           res["total_icresults"]["Favorable"],
           res["total_icresults"]["Oficina no competente"],
           res["total_icresults"]["Parcial"],
           res["total_icresults"]["Desfavorable"]
-        
-  
       )
       
       console.log(labelsA);
@@ -388,7 +348,7 @@ export class DashboardComponent implements OnInit {
           ],
         }
       ];
-      this.tsLabels = ['Tiempo promedio en dias calendario'];
+      this.tsLabels = ['Tiempo promedio en días calendario'];
       this.chartParties = new Chart('canvas-mini-1', {
         type: 'bar',
         data: {
@@ -447,7 +407,7 @@ export class DashboardComponent implements OnInit {
         data: {
           labels: this.fLabels,
           datasets: [{
-            label: "Dias promedio",
+            label: "Días promedio",
             data: fastResponseData,
             backgroundColor: "#BFD8CB"
           }]
@@ -516,7 +476,7 @@ export class DashboardComponent implements OnInit {
         data: {
           labels: this.fLabels,
           datasets: [{
-            label: "Dias promedio",
+            label: "Días promedio",
             data: slowResponseData
           }]
         },
@@ -534,9 +494,18 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  public getMeasureRangeChart(institutionID: string): void {
+  public getChart( institutionID: string, type: string, chartType?: string): void {
     this.chartActive = [true, false, false, false];
 
+    if(chartType == undefined){
+      this.chartType = 'line';
+    }
+    else if(chartType == 'line'){
+      this.chartActive = [true, false, false, false];
+    }
+    else if(chartType == 'bar'){
+      this.chartActive = [false, true, false, false];
+    }
 
     // Chart (re)initialize, to prevent double load on changing date range or views
     if (this.chart != undefined) {
@@ -544,120 +513,161 @@ export class DashboardComponent implements OnInit {
     }
     this.chart = undefined;
 
-    this.globalService.getRequestsTotalsByInstitution(institutionID).subscribe( res => {
-      console.log(res);
-      console.log("get data")
-      console.log(res.map(res => res.inforequests))
+    if (type == 'requests'){
+      this.requestsChart = true;
+      this.complaintsChart = false;
 
-      this.chartjs = true;
-
-      this.tableData = [];
-
-      this.dataInfoRequest = res.map(res => res.inforequests);
-      this.dataLabelRequest = res.map(res => `${res.month}-${res.year}`);
-
-
-      this.chart = new Chart('canvas', {
-        type: 'line',
-        data: {
-          labels: this.dataLabelRequest,
-          datasets: [
-            { 
-              data: this.dataInfoRequest,
-              borderColor: "#3D405B",
-              fill: false,
-              label: "Total de solicitudes"
-            },
-            
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-
-          legend: {
-            display: true
-          },
-          scales: {
-            xAxes: [{
-              display: true
-            }],
-            yAxes: [{
-              display: true,              
-            }],
-          }
-        }
-      });
-      this.chart1exists = true;
-    });
-
-    this.globalService.getForecast("Soyapango")
-      .subscribe(res => {
+      this.globalService.getRequestsTotalsByInstitution(institutionID).subscribe( res => {
         this.chartjs = true;
-
         this.tableData = [];
-
-        let temp_max = res.map(res => res.main.temp_max);
-        let temp_min = res.map(res => res.main.temp_min);
-        let alldates = res.map(res => res.dt)
-        
-        let weatherDates = []
-        alldates.forEach((res) => {
-            let jsdate = new Date(res * 100)
-            weatherDates.push(jsdate.toLocaleTimeString('es', { month: 'short', day: 'numeric' }))
-        })
-        /* 
-        this.barChartLabels = this.metersValues[0]["data"]
-        .map(obj =>
-          formatDate(obj.dateMin, "HH:mm ", "es-Es", "-0600")
-        )
-        .reverse();
-          */
-         
-        this.tableData.push({ headers: "Total solicitudes por institucion" });
-        this.tableData.push({
-          headers: "Fecha/Hora",
-          dataValues: this.barChartLabels
-        });
-        this.tableData.reverse();
-        for (let v in Object.keys(this.tableData)) {
-          //this.displayedColumns.push(this.tableData[v]["headers"]);
-        }
-        //this.tableData2 = this.array1;
-        console.log(this.tableData2)
-        /*
-        if (this.tableData2 == undefined) {
+        this.dataInfoRequest = res.map(res => res.inforequests);
+  
+        // Si no hay data, la sumatoria de todos los elementos da 0 y ocultamos el grafico
+        if(this.dataInfoRequest.reduce(function(acc, val) { return parseInt(acc) + parseInt(val); }, 0) == 0 ||
+        isNaN(this.dataInfoRequest.reduce(function(acc, val) { return parseInt(acc) + parseInt(val); }, 0))){
           $(".no-data").css("visibility", "visible");
           $(".chart-container").css("visibility", "hidden");
-        } else {
+        }
+        else {
           $(".no-data").css("visibility", "hidden");
           $(".chart-container").css("visibility", "visible");
-        }*/
-
-        //this.dataSource.data = this.tableData2;
-        //this.dataSource.paginator = this.paginator;
-        this.showTable = false;
-
+        }
         
-      })
-    
+        this.dataLabelRequest = res.map(res => `${res.month}-${res.year}`);
+
+        let array = []
+        for(let i =0; i<res.length; i++){
+          array.push(
+            { date: `${res[i].month}-${res[i].year}`, total: res[i].inforequests }
+          )
+        }
+        
+        this.dataSource.data = array.reverse();
+        this.dataSource.paginator = this.paginator;
+        this.showTable = true;
+
+        this.chart = new Chart('canvas', {
+          type: this.chartType,
+          data: {
+            labels: this.dataLabelRequest,
+            datasets: [
+              { 
+                data: this.dataInfoRequest,
+                borderColor: "#3D405B",
+                backgroundColor: "#3D405B",
+                fill: false,
+                label: "Total de solicitudes"
+              },
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+  
+            legend: {
+              display: true
+            },
+            scales: {
+              xAxes: [{
+                display: true
+              }],
+              yAxes: [{
+                display: true,              
+              }],
+            }
+          }
+        });
+        this.chart1exists = true;
+      });
+    }
+    else {
+      this.requestsChart = false;
+      this.complaintsChart = true;
+
+      this.globalService.getComplaintsTotalsByInstitution(institutionID).subscribe( res => {
+        this.chartjs = true;
+        this.tableData = [];
+  
+        this.dataInfoRequest = res.map(res => res.infocomplains);
+  
+        // Si no hay data, la sumatoria de todos los elementos da 0 y ocultamos el grafico
+        if(this.dataInfoRequest.reduce(function(acc, val) { return parseInt(acc) + parseInt(val); }, 0) == 0 ||
+        isNaN(this.dataInfoRequest.reduce(function(acc, val) { return parseInt(acc) + parseInt(val); }, 0))){
+          $(".no-data").css("visibility", "visible");
+          $(".chart-container").css("visibility", "hidden");
+        }
+        else {
+          $(".no-data").css("visibility", "hidden");
+          $(".chart-container").css("visibility", "visible");
+        }
+  
+        this.dataLabelRequest = res.map(res => `${res.month}-${res.year}`);
+  
+        this.chart = new Chart('canvas', {
+          type: this.chartType,
+          data: {
+            labels: this.dataLabelRequest,
+            datasets: [
+              { 
+                data: this.dataInfoRequest,
+                borderColor: "#E07A5F",
+                backgroundColor: "#E07A5F",
+                fill: false,
+                label: "Total de apelaciones"
+              },
+              
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+  
+            legend: {
+              display: true
+            },
+            scales: {
+              xAxes: [{
+                display: true
+              }],
+              yAxes: [{
+                display: true,              
+              }],
+            }
+          }
+        });
+        this.chart1exists = true;
+      });
+      
+    }
     
   }
 
   onChangeObj(event: any) {
     this.institutionID = event.target.value;
-    let tempAsset = this.listInstitutions.find(object => object["id"] == this.institutionID);
-    this.getMeasureRangeChart(this.institutionID);
+    this.getChart(this.institutionID, this.chartInfoType);
     /*
     if (tempAsset["meters_installed"].length > 0) {
       this.metersInstalled = true;
-      this.getMeasureRangeChart(this.view, this.initialDate, this.assetID);
     }*/
   }
 
-  changeDataSet(endpoint: string){}
+  changeDataSet(endpoint: string){
+    this.chartInfoType = endpoint;
+    this.getChart(this.institutionID, this.chartInfoType, this.chartType);
+  }
 
-  changeGraphicType(type:string){}
+  changeGraphicType(type:string){
+    let table = document.getElementById("toogleTable");
+    let chart = document.getElementById("chart-wrapper");
+    chart.style.display = "block";
+    table.style.display = "none";
+
+    this.chartType = type;
+    if(this.chartType != "line" && this.chartType != "bar"){
+      this.chartType = "line";
+    }
+    this.getChart(this.institutionID, this.chartInfoType, this.chartType);
+  }
 
   // Change visualization type to table view
   changeToTable() {
