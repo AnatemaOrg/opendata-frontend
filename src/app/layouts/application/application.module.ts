@@ -13,6 +13,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ApiComponent } from '@app/components/api/api.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { InstitutionsComparisonComponent } from '@app/components/institutions_comparison/institutions_comparison.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
   ],
   declarations: [
     DashboardComponent,
-    ApiComponent
+    ApiComponent,
+    InstitutionsComparisonComponent
   ],
   entryComponents: [
    
