@@ -179,7 +179,8 @@ export class DashboardComponent implements OnInit {
     // TEST
     this.institutionID = "123"; // Default que traiga info de Presidencia
     this.chartInfoType = 'requests'; // Default vista de solicitudes de informacion
-    
+    this.chartActive = [true, false, false, false];
+
     this.getChart(this.institutionID, this.chartInfoType);
     
     this.globalService.getTotals().subscribe( res => {
@@ -495,17 +496,11 @@ export class DashboardComponent implements OnInit {
 
 
   public getChart( institutionID: string, type: string, chartType?: string): void {
-    this.chartActive = [true, false, false, false];
 
     if(chartType == undefined){
       this.chartType = 'line';
     }
-    else if(chartType == 'line'){
-      this.chartActive = [true, false, false, false];
-    }
-    else if(chartType == 'bar'){
-      this.chartActive = [false, true, false, false];
-    }
+    
 
     // Chart (re)initialize, to prevent double load on changing date range or views
     if (this.chart != undefined) {
@@ -603,6 +598,17 @@ export class DashboardComponent implements OnInit {
   
         this.dataLabelRequest = res.map(res => `${res.month}-${res.year}`);
   
+        let array = []
+        for(let i =0; i<res.length; i++){
+          array.push(
+            { date: `${res[i].month}-${res[i].year}`, total: res[i].infocomplains }
+          )
+        }
+        
+        this.dataSource.data = array.reverse();
+        this.dataSource.paginator = this.paginator;
+        this.showTable = true;
+
         this.chart = new Chart('canvas', {
           type: this.chartType,
           data: {
@@ -654,6 +660,7 @@ export class DashboardComponent implements OnInit {
   changeDataSet(endpoint: string){
     this.chartInfoType = endpoint;
     this.getChart(this.institutionID, this.chartInfoType, this.chartType);
+
   }
 
   changeGraphicType(type:string){
@@ -666,6 +673,14 @@ export class DashboardComponent implements OnInit {
     if(this.chartType != "line" && this.chartType != "bar"){
       this.chartType = "line";
     }
+    
+    if(this.chartType == 'line'){
+      this.chartActive = [true, false, false, false];
+    }
+    else if(this.chartType == 'bar'){
+      this.chartActive = [false, true, false, false];
+    }
+
     this.getChart(this.institutionID, this.chartInfoType, this.chartType);
   }
 
