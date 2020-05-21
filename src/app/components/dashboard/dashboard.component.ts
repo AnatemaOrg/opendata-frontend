@@ -190,7 +190,7 @@ export class DashboardComponent implements OnInit {
       this.totalComplaints = res["total_infocomplains"];
 
 
-      // Grafico para las apelaciones
+      // Grafico para las denuncias
       
       let labelsA = [];
       let complaintsResponseData = []
@@ -206,9 +206,6 @@ export class DashboardComponent implements OnInit {
           res["total_icresults"]["Parcial"],
           res["total_icresults"]["Desfavorable"]
       )
-      
-      console.log(labelsA);
-      console.log(complaintsResponseData);
       
       this.aLabels = labelsA;
       this.chartComplaintsAnswer = new Chart('canvas-mini-2', {
@@ -619,7 +616,7 @@ export class DashboardComponent implements OnInit {
                 borderColor: "#E07A5F",
                 backgroundColor: "#E07A5F",
                 fill: false,
-                label: "Total de apelaciones"
+                label: "Total de denuncias"
               },
               
             ]

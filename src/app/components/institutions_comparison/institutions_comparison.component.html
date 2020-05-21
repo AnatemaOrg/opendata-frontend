@@ -3,16 +3,10 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
-        <h1 class="floating-title">Datos abiertos - Información</h1>
+        <h1 class="floating-title">[SECCION EN CONSTRUCCION] Comparacion de instituciones</h1>
   
         <p>
-          Se muestran datos útiles y curiosos relacionados con las solicitudes 
-          realizadas por FUNDE, que ha hecho uso de la Ley de Acceso a la Información Pública.
-          Las fuentes de datos utilizados en este han sido descargados desde la página web: 
-          <a href="https://alac.funde.org/api/v1" target="_blank">https://alac.funde.org/api/v1</a>.
-          A su vez, los datos han sido procesados para obtener información más segregada.
-          <br>
-          El uso de este portal es de carácter informativo y sin fines de lucro.
+          Puede escoger dos instituciones entre el listado para comparar datos basicos de las solicitudes que se han realizado
         </p>
         <br>
         <br>
@@ -20,174 +14,109 @@
   
     </div>
     
+    <div class="card">
+      <div class="card-body">
+        <table id="comparisonTable" class="table">
+          <tbody>
+            <tr>
+              <td>Instituciones</td>
+              <th role="columnheader">
+                <div>
+                  <select
+                    class="custom-select"
+                    (change)="onChangeInstitution1($event)"
+                    name="sel3"
+                  >
+                    <option value="">Seleccione una institucion</option>
+                    <option
+                      *ngFor="let item of institutionList"
+                      [selected]="item.id === institutionSelection1"
+                      [value]="item.id"
+                    >
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div>
+              </th>
+              <th role="columnheader">
+                <div>
+                  <select
+                    class="custom-select"
+                    (change)="onChangeInstitution2($event)"
+                    name="sel3"
+                  >
+                    <option value="">Seleccione una institucion</option>
+                    <option
+                      *ngFor="let item of institutionList"
+                      [selected]="item.id === institutionSelection2"
+                      [value]="item.id"
+                    >
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div>
     
-    <table id="HLCXComparisonTable" class="a-bordered a-horizontal-stripes  a-spacing-none a-size-base comparison_table">
-      <tbody>
-        <tr class="comparison_table_image_row">
-          <td class="comparison_table_first_col"></td>
-          <th data-asin="B081SM57RY" class="comparison_image_title_cell" role="columnheader">
-              <div class="a-row a-spacing-top-micro">
-                      
-                          
-                          
-                              <img alt="2020 HP 15 15.6&quot; HD Touchscreen Premium Laptop - 10th Gen Intel Core i5-1035G1, 16GB DDR4, 512GB SSD, USB Type-C, HDMI, Windows 10 - Silver W" src="https://m.media-amazon.com/images/I/51y8P2rYc5L._AC_SS350_.jpg" class="" id="comparison_image" data-src="https://m.media-amazon.com/images/I/51y8P2rYc5L._AC_SS350_.jpg"><noscript><img alt="2020 HP 15 15.6&quot; HD Touchscreen Premium Laptop - 10th Gen Intel Core i5-1035G1, 16GB DDR4, 512GB SSD, USB Type-C, HDMI, Windows 10 - Silver W" src="https://m.media-amazon.com/images/I/51y8P2rYc5L._AC_SS350_.jpg"></noscript>
-                          
-                          
-                      
-              </div>
-              <div class="a-row a-spacing-top-small">
-                  <div id="comparison_title" class="a-section a-spacing-none">
-                      <span aria-hidden="true" class="a-size-base a-color-base a-text-bold">
-                          This item
-                      </span>
-                      <span aria-hidden="true" class="a-size-base a-color-base">2020 HP 15 15.6" HD Touchscreen Premium Laptop - 10th Gen Intel Core i5-1035G1, 16GB DDR4, 512GB SSD, USB Type-C, HDMI, Windows 10 - Silver W</span>
-                  </div>
-                  
-                  
-              </div>
-          </th>
-          <th data-asin="B085B5SXLY" class="comparison_image_title_cell comparable_item0" role="columnheader">
-              <a class="a-link-normal" target="_self" rel="noopener" href="/HP-15-inch-i5-1035G1-Solid-State-15-dy1036nr/dp/B085B5SXLY/ref=psdc_13896615011_t1_B081SM57RY">
-                  <div class="a-row a-spacing-top-micro">
-                      
-                          
-                              
-                              
-                                  <img alt="HP 15-inch FHD Laptop, 10th Gen Intel Core i5-1035G1, 8 GB RAM, 256 GB Solid-State Drive, Windows 10 Home (15-dy1036nr, Natural Silver)" src="https://m.media-amazon.com/images/I/71WSt8D7KFL._AC_SS350_.jpg" aria-hidden="true" class="" id="comparison_image0" data-src="https://m.media-amazon.com/images/I/71WSt8D7KFL._AC_SS350_.jpg"><noscript><img alt="HP 15-inch FHD Laptop, 10th Gen Intel Core i5-1035G1, 8 GB RAM, 256 GB Solid-State Drive, Windows 10 Home (15-dy1036nr, Natural Silver)" src="https://m.media-amazon.com/images/I/71WSt8D7KFL._AC_SS350_.jpg"></noscript>
-                              
-                              
-                          
-                  </div>
-                  <div id="comparison_title0" class="a-row a-spacing-top-small">
-                      <span class="a-size-base">HP 15-inch FHD Laptop, 10th Gen Intel Core i5-1035G1, 8 GB RAM, 256 GB Solid-State Drive, Windows 10 Home (15-dy1036nr, Natural Silver)</span>
-                  </div>
-              </a>
-              
-              
-          </th>
+              </th>
+            </tr>
+            
+           
+            <tr>
+              <th role="rowheader">
+                <span>Promedio de respuesta a solicitudes</span>
+              </th>
+              <td>
+                {{ average_response1 }}
+              </td>
+              <td>
+                {{ average_response2 }}
+              </td>
+            </tr>
+            <tr>
+              <th role="rowheader">
+                <span>Total de solicitudes realizadas</span>
+              </th>
+              <td>
+                {{ total_inforequest1 }}
+              </td>
+              <td >
+                {{ total_inforequest2 }}
+              </td>
+            </tr>
+            <tr>
+              <th role="rowheader">
+                <span>Estado de las solicitudes</span>
+              </th>
+              <td>
+                <ul>
+                  <!-- 
 
-        </tr>
-        <tr></tr>
-        <tr>
-          <td class="comparison_table_first_col"></td>
-          <td class="a-text-left comparison_add_to_cart_button comparable_item0">
-          </td>
-          <td class="a-text-left comparison_add_to_cart_button comparable_item1">
-          </td>
-        </tr>
-
-        <tr id="comparison_custormer_rating_row">
-          <th class="comparison_attribute_name_column comparison_table_first_col" role="rowheader">
-              <span class="a-size-base a-color-base">Customer Rating</span>
-          </th>
-          <td class="comparison_baseitem_column">
-              
-              
-              
-              <span>
-                  <span class="a-declarative" data-action="a-popover" data-a-popover="{&quot;max-width&quot;:&quot;700&quot;,&quot;closeButton&quot;:&quot;false&quot;,&quot;position&quot;:&quot;triggerBottom&quot;,&quot;url&quot;:&quot; /gp/customer-reviews/widgets/average-customer-review/popover/ref=acr_dpComparsion__popover?contextId=dpComparsion&amp;asin=B081SM57RY &quot;,&quot;restoreFocusOnHide&quot;:&quot;false&quot;}">
-                      <i class="a-icon a-icon-star a-star-4 a-spacing-none"><span class="a-icon-alt">4.2 out of 5 stars</span></i>
-                  </span>
-                  <a class="a-link-normal" target="_self" rel="noopener" href="/product-reviews/B081SM57RY/ref=psdc_13896615011_r0_B081SM57RY?_encoding=UTF8&amp;showViewpoints=1">(290)</a>
-                  <span class="a-letter-space"></span>
-              </span>
-          </td>
-          <td class="comparison_sim_items_column comparable_item0">
-              
-              
-              
-              <span>
-                  <span class="a-declarative" data-action="a-popover" data-a-popover="{&quot;max-width&quot;:&quot;700&quot;,&quot;closeButton&quot;:&quot;false&quot;,&quot;position&quot;:&quot;triggerBottom&quot;,&quot;url&quot;:&quot; /gp/customer-reviews/widgets/average-customer-review/popover/ref=acr_dpComparsion__popover?contextId=dpComparsion&amp;asin=B085B5SXLY &quot;,&quot;restoreFocusOnHide&quot;:&quot;false&quot;}">
-                      <i class="a-icon a-icon-star a-star-4 a-spacing-none"><span class="a-icon-alt">4.0 out of 5 stars</span></i>
-                  </span>
-                  <a class="a-link-normal" target="_self" rel="noopener" href="/product-reviews/B085B5SXLY/ref=psdc_13896615011_r1_B081SM57RY?_encoding=UTF8&amp;showViewpoints=1">(6)</a>
-                  <span class="a-letter-space"></span>
-              </span>
-          </td>
-
-        </tr>
-        <tr id="comparison_price_row">
-          <th class="comparison_attribute_name_column comparison_table_first_col" role="rowheader">
-              <span class="a-size-base a-color-base">Price</span>
-          </th>
-          <td class="comparison_baseitem_column">
-              
-                  
-                  
-                  
-                  
+                    <li *ngFor="let obj of total_status1">{{obj | json}}</li>
+                  -->
+                </ul>
+              </td>
+              <td >
+                <!-- 
+                <li *ngFor="let obj of total_status2| keyvalue">{{obj | json}}</li>
+                -->
+              </td>
+            </tr>
+            <tr>
+              <th role="rowheader">
+                <span>Resultado de las solicitudes</span>
+              </th>
+              <td>
                       
-                          
-                              <span class="a-price" data-a-size="l" data-a-color="base"><span class="a-offscreen">$709.00</span><span aria-hidden="true"><span class="a-price-symbol">$</span><span class="a-price-whole">709<span class="a-price-decimal">.</span></span><span class="a-price-fraction">00</span></span></span>
-                          
-                          
-                      
-                  
-              
-          </td>
-          <td class="comparison_sim_items_column comparable_item0">
-              
-                  
-                  
-                  
-                      
-                          
-                              <span class="a-price" data-a-size="l" data-a-color="base"><span class="a-offscreen">$669.90</span><span aria-hidden="true"><span class="a-price-symbol">$</span><span class="a-price-whole">669<span class="a-price-decimal">.</span></span><span class="a-price-fraction">90</span></span></span>
-                          
-                          
-                      
-                  
-              
-          </td>
+              </td>
+              <td >
+                
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-        </tr>
-        <tr id="comparison_sold_by_row">
-          <th class="comparison_attribute_name_column comparison_table_first_col" role="rowheader">
-              <span class="a-size-base a-color-base">Sold By</span>
-          </th>
-          <td class="comparison_baseitem_column">
-              
-                  
-                  
-                  
-                      <a class="a-spacing-top-small a-link-normal" target="_self" rel="noopener" href="/gp/help/seller/at-a-glance.html/ref=psdc_13896615011_s0_B081SM57RY?ie=UTF8&amp;seller=A3HM8JOD6DFQFJ">WL Distributor (SN Recorded)</a>
-                  
-              
-          </td>
-          <td class="comparison_sim_items_column comparable_item0">
-              
-                  
-                  
-                      <a class="a-spacing-top-small a-link-normal" target="_self" rel="noopener" href="/gp/help/seller/at-a-glance.html/ref=psdc_13896615011_s1_B081SM57RY?ie=UTF8&amp;seller=A1T510I98DYSKK">busylittlebee</a>
-                  
-              
-          </td>
-          
-        </tr>
-
-        <tr class="comparison_other_attribute_row">
-          <th class="a-span3 comparison_attribute_name_column comparison_table_first_col" role="rowheader">
-              <span class="a-size-base a-color-base">Computer Memory Size</span>
-          </th>
-          <td class="comparison_baseitem_column">
-              
-              
-                  
-                  
-                      <span class="a-size-base a-color-base">16 GB</span>
-                  
-              
-          </td>
-
-          <td class="comparison_sim_items_column comparable_item0">
-            <span class="a-size-base a-color-base">8 GB</span>
-          </td>
-  
-          
-        </tr>
-      </tbody>
-    </table>
-
+    <br>
 
 
   </div>
