@@ -207,9 +207,6 @@ export class DashboardComponent implements OnInit {
           res["total_icresults"]["Desfavorable"]
       )
       
-      console.log(labelsA);
-      console.log(complaintsResponseData);
-      
       this.aLabels = labelsA;
       this.chartComplaintsAnswer = new Chart('canvas-mini-2', {
         type: 'bar',
