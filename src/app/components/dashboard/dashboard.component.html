@@ -64,7 +64,7 @@
           <div class="card-body primary-data">
             <img alt="solicitudes" class="card-img-absolute" src="assets/img/documentos.svg">
             <h2 class="priority">{{totalComplaints}}</h2>
-            <h4 class="card-description">Total de solicitudes en apelación</h4>
+            <h4 class="card-description">Total de denuncias</h4>
           </div>
         </div>
       </div>
@@ -92,7 +92,7 @@
       <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="widget">
           <div class="mini-stats">
-            <h2>Resultados de apelaciones</h2>
+            <h2>Resultados de denuncias</h2>
             <div class="chart-mini-container" id="chart-mini-wrapper-2" >
               <canvas id="canvas-mini-2" >{{ chartComplaintsAnswer }}</canvas>
 
@@ -174,7 +174,7 @@
                 </button>
                 
                 <button
-                  title="Apelaciones"
+                  title="Denuncias"
                   class="btn"
                   [ngClass]="[
                   complaintsChart == true
@@ -183,7 +183,7 @@
                   ]"
                   (click)="changeDataSet('complaints')"
                 > 
-                  Apelaciones
+                  Denuncias
                   <fa-icon [icon]="faTable"></fa-icon>
                 </button>
               </div>
@@ -271,5 +271,37 @@
       </div>
     </div>
     
+    <br>
+    <br>
+    <div class="row align-container">
+      <div class="col-12">
+        <div class="alert alert-secondary">
+          <h2>
+            Descargar las fuentes de datos en formato CSV
+          </h2>
+          
+          <div class="row">
+            <div class="col-6">
+              
+                <div class="alert border-solid">
+                  <h3 class="card-title">Solicitudes de información</h3>
+                  <a href="https://a-better-api.herokuapp.com/api/v1/inforequests/csv" target="_blank" class="btn btn-primary btn-lg">Descargar CSV</a>
+                </div>
+              
+            </div>
+            <div class="col-6">
+              
+                <div class="alert border-solid">
+                  <h3 class="card-title">Denuncias</h3>
+                  <a href="https://a-better-api.herokuapp.com/api/v1/infocomplains/csv" target="_blank" class="btn btn-primary btn-lg">Descargar CSV</a>
+                </div>
+              
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <br>
   </div>
   <br>

@@ -40,6 +40,17 @@ export class GlobalService {
       )
   }
 
+  getInstitutionCatalog(): Observable<any> {
+    return this.http.get(
+      `${environment.productionAPI}/catalogs/institutions`)
+      .pipe(
+        map(response =>{
+          return response;
+        }),
+        catchError(this.errorHandl)
+      )
+  }
+
   getRequestsTotalsByInstitution(id:string): Observable<any> {
     return this.http.get(
       `${environment.productionAPI}/catalogs/inforequests_history?institution=${id}`)
